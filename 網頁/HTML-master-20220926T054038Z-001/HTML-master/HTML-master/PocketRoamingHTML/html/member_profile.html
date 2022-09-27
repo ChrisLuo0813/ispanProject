@@ -60,14 +60,14 @@
                                     <form class="text-dark">
                                         <div class="modal-body">
                                             <label class="mx-2 my-1">帳號</label>
-                                            <input class="mx-2 my-1" type="text"><br>
-                                            <label class="mx-2 my-1">密碼</label>
-                                            <input class="mx-2 my-1" type="text"><br>        
+                                            <input class="mx-2 my-1" type="text" id="loginAccountTextBox"><br>
+                                            <label class="mx-2 my-1">密碼 </label>
+                                            <input class="mx-2 my-1" type="text" id="loginPasswordMTextBox"><br>        
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn">輸入</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                                            <button type="submit" class="btn btn-primary">送出</button>
+                                            <button type="submit" id="loginMember" class="btn btn-primary">送出</button>
                                         </div>
                                     </form>
                               </div>
@@ -220,7 +220,8 @@
 
     <!-- function 區域 -->
     <script>
-
+$(function () {
+    
         $("#createMember").on("click", async function () {
         var dataToServer = {
             member_account: $("#createAccountTextBox").val(),
@@ -230,12 +231,29 @@
             var p = $.ajax({
                 type: "post",
                 url: "http://localhost:8080/doRegister",
-                // dataType: "json",
                 data: dataToServer
             })
             var result = await p;
+            alert(result);
             // downloadAndRefreshUI(); 
         })
+
+        $("#loginMember").on("click", async function () {
+        var dataToServer = {
+            member_account: $("#loginAccountTextBox").val(),
+            member_password: $("#loginPasswordMTextBox").val(),
+        }
+            var p = $.ajax({
+                type: "get",
+                url: "http://localhost:8080/loginRegister",
+                data: dataToServer
+            })
+            var result = await p;
+            alert(result);
+            // downloadAndRefreshUI(); 
+        })
+
+    })  // end of init.
     </script>
 </body>
 </html>
