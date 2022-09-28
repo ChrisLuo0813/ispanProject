@@ -49,7 +49,8 @@
             <div class="d-flex">
                 <div class="btn-group" role="group">
                     <!-- 第一顆按鈕 -->
-                        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop">登入</button>
+                        <button id="loginBtn" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop">登入</button>
+                        <button id="logoutBtn" type="button" style="display:none" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop">登出</button>
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
@@ -67,7 +68,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn">輸入</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                                            <button type="submit" id="loginMember" class="btn btn-primary">送出</button>
+                                            <button type="button" id="loginMember" class="btn btn-primary" data-bs-dismiss="modal">送出</button>
                                         </div>
                                     </form>
                               </div>
@@ -95,7 +96,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn">輸入</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                                            <button type="submit" id="createMember" class="btn btn-primary">送出</button>
+                                            <button type="button" id="loginMember" class="btn btn-primary" data-bs-dismiss="modal">送出</button>
                                         </div>
                                     </form>
                               </div>
@@ -152,9 +153,9 @@
                         <div class="card">
                             <div class="card-body text-dark text-center">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"class="rounded-circle img-fluid" style="width: 100px;" />
-                                <h4 class="my-2">暱稱(帳號)</h4>
-                                <p>居住城市</p>
-                                <p>簡介</p>
+                                <h4 class="my-2" id="member_nickname">暱稱(帳號)</h4>
+                                <p id="member_region">居住城市</p>
+                                <p id="member_introduction">簡介</p>
                                 <!-- <p>E-mail </p> -->
 
                                 <button type="button" class="btn btn-primary btn-rounded btn-lg">
@@ -221,7 +222,34 @@
     <!-- function 區域 -->
     <script>
 $(function () {
-    
+    var userData;
+    var session = window.sessionStorage;
+
+    async function downloadAndRefreshUI() {
+        var p = $.ajax({
+            type: "get",
+            url: "http://localhost:8080/getRegister",
+            dataType:"json"
+        })
+        var result = await p;
+        userData = result;
+        // session.setItem("name",userData.member_nickname);
+        // session.setItem("region",userData.member_region);
+        // session.setItem("nickname",userData.member_introduction);
+        
+        refreshUI();
+    }
+    downloadAndRefreshUI();
+    function refreshUI() {
+        $("#member_nickname").text(session.getItem("name"));
+        $("member_region").text(session.getItem("region"));
+        $("#member_introduction").text(session.getItem("nickname"));
+
+
+        
+        // if($("#logoutBtn")){$("#logoutBtn").text(登出);}
+    }
+        refreshUI();
         $("#createMember").on("click", async function () {
         var dataToServer = {
             member_account: $("#createAccountTextBox").val(),
@@ -234,23 +262,24 @@ $(function () {
                 data: dataToServer
             })
             var result = await p;
-            alert(result);
-            // downloadAndRefreshUI(); 
+            alert(result); 
         })
 
         $("#loginMember").on("click", async function () {
         var dataToServer = {
             member_account: $("#loginAccountTextBox").val(),
-            member_password: $("#loginPasswordMTextBox").val(),
+            member_password: $("#loginPasswordMTextBox").val()
         }
             var p = $.ajax({
-                type: "get",
+                type: "post",
                 url: "http://localhost:8080/loginRegister",
                 data: dataToServer
             })
             var result = await p;
+            downloadAndRefreshUI();
             alert(result);
-            // downloadAndRefreshUI(); 
+            loginBtn.style.display = "none";
+            logoutBtn.style.display = "block";
         })
 
     })  // end of init.
