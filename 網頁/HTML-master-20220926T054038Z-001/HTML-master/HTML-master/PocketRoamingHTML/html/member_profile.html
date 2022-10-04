@@ -59,14 +59,14 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                     <form class="text-dark">
-                                        <div class="modal-body">
+                                        <div class="modal-body" id = "loginBox">
                                             <label class="mx-2 my-1">帳號</label>
                                             <input class="mx-2 my-1" type="text" id="loginAccountTextBox" placeholder="請輸入大小寫英數字"><br>
                                             <label class="mx-2 my-1">密碼 </label>
-                                            <input class="mx-2 my-1" type="password" id="loginPasswordMTextBox" placeholder="請輸入大小寫英數字"><br>        
+                                            <input class="mx-2 my-1" type="password" id="loginPasswordMTextBox" placeholder="請輸入大小寫英數字"><br>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn">輸入</button>
+                                            <button type="button" class="btn" id="forgetBtn">忘記密碼？</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                                             <button type="button" id="loginMember" class="btn btn-primary" data-bs-dismiss="modal">送出</button>
                                         </div>
@@ -94,7 +94,6 @@
                                             <input class="mx-2 my-1" type="text" id="createMailTextBox" placeholder=""><br>         
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn">輸入</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                                             <button type="button" id="createMember" class="btn btn-primary" data-bs-dismiss="modal">送出</button>
                                         </div>
@@ -161,7 +160,7 @@
                                 <button type="button" class="btn btn-primary btn-rounded btn-lg">
                                     傳訊息
                                 </button>
-                                <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                <button id="editbtn" type="button" class="btn btn-primary btn-rounded btn-lg" data-bs-toggle="modal" data-bs-target="#editmodal">
                                     編輯
                                 </button>
                             </div>
@@ -209,6 +208,51 @@
             </div>
         </div>
     </div>
+    <!-- 跳出編輯室窗 -->
+    <div class="modal top fade" id="editmodal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <h4 class="modal-title">編輯個人資料</h4>
+                    <button type="close" class="btn btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="test" action="http://localhost:8080/changeRegister" enctype="Multipart/Form-Data" target="nm_iframe">
+                        <!-- <div class="mx-3 my-3"> -->
+                            <div class="my-2">
+                                <label class="form-label">暱稱　:　</label>
+                                <input class="form-text" type="text" name="member_nickname">
+                            </div>
+                            <div class="my-2">
+                                <label class="form-label">居住地:　</label>
+                                <input class="form-text" type="text" name="member_region">
+                            </div>
+                            <div>
+                                <label class="form-label" >自我簡介</label>
+                                <textarea class="form-control" name="member_introduction"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">上傳頭像</label>
+                                <input class="form-control" type="file" id="formFile" name="uploadImg">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">生日</label>
+                                <input class="form-control" type="date" id="productdate" name="member_birthday">
+                            </div>
+                        <!-- </div> -->
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">確定</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">取消</button>
+                    </form>
+                    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- foot -->
     <a href="javascript:window.scrollTo(0,0)">
@@ -219,11 +263,12 @@
         </footer>
     </a>
 
+
     <!-- function 區域 -->
     <script>
 $(function () {
-    // var userData;
-    // var session = window.sessionStorage;
+    var userData;
+    var i = 0;
     async function downloadAndRefreshUI() {
         var p = $.ajax({
             type: "get",
@@ -231,28 +276,35 @@ $(function () {
             dataType:"json"
         })
         var result = await p;
-        userData = result;   
+        userData = result; 
         refreshUI();
     }
     downloadAndRefreshUI();
     function refreshUI() {
-        if(userData!=null){
+        if(i == 3){
+                $("#loginBox").append(`<label class="mx-2 my-1" style="color:red">忘記密碼？請輸入帳號並點擊忘記密碼，至登記信箱獲取驗證碼</label>`);
+            }
+         if(userData.member_id == 0){
+        // window.location.href = "http://127.0.0.1:5500/index.html";
+        alert("請先登入帳號！！");
+        }else {
         $("#member_nickname").text(userData.member_nickname);
-        $("member_region").text(userData.member_region);
+        $("#member_region").text(userData.member_region);
         $("#member_introduction").text(userData.member_introduction);
-            loginBtn.style.display = "none";
-            logoutBtn.style.display = "block";
-        }else{
-            loginBtn.style.display = "block";
-            logoutBtn.style.display = "none";
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "block";
         }
     }
+
         $("#createMember").on("click", async function () {
         var dataToServer = {
             member_account: $("#createAccountTextBox").val(),
             member_password: $("#createPasswordMTextBox").val(),
             member_email:$("#createMailTextBox").val()
         }
+            console.log($("#createAccountTextBox").val());
+            console.log($("#createPasswordMTextBox").val());
+            console.log($("#createMailTextBox").val());
             var p = $.ajax({
                 type: "post",
                 url: "http://localhost:8080/doRegister",
@@ -263,6 +315,7 @@ $(function () {
         })
 
         $("#loginMember").on("click", async function () {
+            i++;
         var dataToServer = {
             member_account: $("#loginAccountTextBox").val(),
             member_password: $("#loginPasswordMTextBox").val()
@@ -275,8 +328,7 @@ $(function () {
             var result = await p;
             downloadAndRefreshUI();
             alert(result);
-            loginBtn.style.display = "none";
-            logoutBtn.style.display = "block";
+            console.log(i);
         })
 
         $("#logoutBtn").on("click", async function () {
@@ -286,8 +338,7 @@ $(function () {
             })
             var result = await p;
             alert(result);
-            loginBtn.style.display = "block";
-            logoutBtn.style.display = "none";
+            window.location.href = "http://127.0.0.1:5500/index.html";
         })
 
         $("#changeMember").on("click", async function () {
@@ -299,6 +350,19 @@ $(function () {
             var p = $.ajax({
                 type: "post",
                 url: "http://localhost:8080/changeRegister",
+                data: dataToServer
+            })
+            var result = await p;
+            alert(result); 
+        })
+
+        $("#forgetBtn").on("click", async function () {
+        var dataToServer = {
+            member_account: $("#loginAccountTextBox").val(),
+        }
+            var p = $.ajax({
+                type: "post",
+                url: "http://localhost:8080/forgetRegister",
                 data: dataToServer
             })
             var result = await p;
