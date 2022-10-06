@@ -11,5 +11,7 @@ public interface membersRepository extends JpaRepository<members, Integer>{
     members queryBymember_account(String member_account);
 	@Query(value = "select * from members where member_account = ?1 and member_password = ?2", nativeQuery = true)
     members queryBymember_password(String member_account,String member_password);
+	@Query(value = "select * from members where member_id = ?1 ", nativeQuery = true)
+    members queryByrate_id(Integer rate_id);
 }
 

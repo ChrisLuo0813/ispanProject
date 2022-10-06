@@ -3,6 +3,7 @@ package tw.com.ispan.eeit48.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -56,6 +57,9 @@ public class membersController {
 	//驗證帳號是否重複 重複會SYSOUT account exist    
 	    	if(membersRepository.queryBymember_account(createMember.getMember_account())!=null) {
 	            return "此帳號已被使用";
+	    }else if(createMember.getMember_account().equals("") || createMember.getMember_password().equals("") 
+	    		|| createMember.getMember_email().equals("")){
+	    		return "帳號、密碼、信箱都不能空白";
 	    }else{      
 	    			member.setMember_account(createMember.getMember_account());
 	    	        member.setMember_email(createMember.getMember_email());
@@ -78,10 +82,10 @@ public class membersController {
 	//account password要和前端AJAX傳來的KEY名稱一致    
 	//驗證帳號密碼是否正確    
 	    	member = membersRepository.queryBymember_account(loginMember.getMember_account());
-	    	System.out.println(member.toString());
-	    	if(member == null) {
-	            System.out.println("帳號或密碼輸入錯誤");
-	            return "帳號或密碼輸入錯誤";
+	    	if(loginMember.getMember_account().equals("")) {
+	            return "請輸入帳號與密碼";
+	    }else if(member == null){
+	    		return "帳號或密碼輸入錯誤";
 	    }else{   
 	    	Boolean	isright = bcpe.matches(loginMember.getMember_password(), member.getMember_password());
     		if(isright) {
@@ -218,12 +222,43 @@ public class membersController {
 	    
 //搜尋評價列表
 	    @CrossOrigin
-	    @PostMapping(path = {"/checkRate"})
-	    public List<rate_list> checkRate() {
+	    @PostMapping(path = {"/getRate"})
+	    public getRate getRate() {
+	    	getRate gr=new getRate();
 	    	member = (members) localSession.getAttribute("member");
+	    	LinkedList<members> lm = new LinkedList<members>();
 	    		Integer rated_id = member.getMember_id();	
 	    		List<rate_list> rate = rateRepository.queryByrated_member(rated_id);
-	    		 return rate;
+	    		System.out.println(rate);
+	    		rate.forEach((e)->{	
+	    			lm.add(membersRepository.queryByrate_id(e.getRate_member_id()));
+	    			System.out.println(membersRepository.queryByrate_id(e.getRate_id()));
+	    		});	
+	    		gr.setLinkedListmembers(lm);
+	    		gr.setListrate_list(rate);
+	    		System.out.println(gr);
+	    		 return gr;
 	    }
+	    
+	    
+	    public class getRate{
+	    	List<rate_list> Listrate_list;
+	    	LinkedList<members> LinkedListmembers;
+			public List<rate_list> getListrate_list() {
+				return Listrate_list;
+			}
+			public void setListrate_list(List<rate_list> listrate_list) {
+				Listrate_list = listrate_list;
+			}
+			public LinkedList<members> getLinkedListmembers() {
+				return LinkedListmembers;
+			}
+			public void setLinkedListmembers(LinkedList<members> linkedListmembers) {
+				LinkedListmembers = linkedListmembers;
+			}
+	    	
+	    }
+	    
+	    
 	    
 }
