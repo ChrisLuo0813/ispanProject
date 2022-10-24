@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../bootstrap5/css/bootstrap.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
+    <script src="../bootstrap5/js/bootstrap.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/jquery.toast.js"></script>
+    <link href="../css/jquery.toast.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="../js/logIn.js"></script> -->
+
+    <!--     <script src = "../js/profiles.js"></script> -->
+    <title>Document</title>
+    <style></style>
+</head>
+
+<body>
+    <!-- <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-11" > -->
+    <!-- top-navbar navbar navbar-expand-sm navbar-dark bg-dark -->
+    <nav class="navbar navbar-expand bg-info text-white px-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <img src="../img/LOGO03.png" style="height:50px; width:auto;">
+            </a>
+            <ul class="nav nav-pills me-auto te mx-1">
+                <!-- nav nav-pills -->
+                <!-- data-bs-toggle="pill" -->
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-4" href="../index.html">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-4" href="./rentflow.html">租借流程</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-4" href="./chat.html">聊天室</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-4" href="./wishpool.html">許願池</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-4" href="./member.html">會員</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white active fs-4" href="./cart.html">購物車</a>
+                </li>
+            </ul>
+            <!-- 靠右 -->
+            <div class="d-flex">
+                <div class="btn-group" role="group">
+                    <!-- 第一顆按鈕 -->
+                    <button id="loginBtn" type="button" class="btn btn-primary fs-4" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">登入</button>
+                    <button id="logoutBtn" type="submit" style="display:none"
+                        class="btn btn-primary fs-4 rounded rounded-2" data-bs-target="#staticBackdrop ">登出</button>
+
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="staticBackdropLabel">登入</h5>
+                                    <button type="button" class="btn-close fs-4" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form class="text-dark">
+                                    <div class="modal-body" id="loginBox">
+                                        <label class="mx-2 my-1">帳號</label>
+                                        <input class="mx-2 my-1" type="text" id="loginAccountTextBox"
+                                            placeholder="請輸入大小寫英數字"><br>
+                                        <label class="mx-2 my-1">密碼 </label>
+                                        <input class="mx-2 my-1" type="password" id="loginPasswordMTextBox"
+                                            placeholder="請輸入大小寫英數字"><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn fs-4" id="forgetBtn">忘記密碼？</button>
+                                        <button type="button" class="btn btn-secondary fs-4"
+                                            data-bs-dismiss="modal">關閉</button>
+                                        <button type="button" id="loginMember" class="btn btn-primary"
+                                            data-bs-dismiss="modal">送出</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 第二顆按鈕 -->
+                    <button id="createBtn" type="button" class="btn btn-primary fs-4" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop2">註冊</button>
+                    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="staticBackdropLabel2">註冊</h5>
+                                    <button type="button" class="btn-close fs-4" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <form class="text-dark">
+                                    <div class="modal-body">
+                                        <label class="mx-2 my-1">帳號</label>
+                                        <input class="mx-2 my-1" type="text" id="createAccountTextBox"
+                                            placeholder="請輸入大小寫英數字"><br>
+                                        <label class="mx-2 my-1">密碼</label>
+                                        <input class="mx-2 my-1" type="password" id="createPasswordMTextBox"
+                                            placeholder="請輸入大小寫英數字"><br>
+                                        <label class="mx-2 my-1">信箱</label>
+                                        <input class="mx-2 my-1" type="text" id="createMailTextBox" placeholder=""><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary fs-4"
+                                            data-bs-dismiss="modal">關閉</button>
+                                        <button type="button" id="createMember" class="btn btn-primary fs-4"
+                                            data-bs-dismiss="modal">送出</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- main-body -->
+    <div class="container-fluid ">
+        <div class="row justify-content-center mainbody">
+            <div class="col-11">
+                <div>
+                    <div class="row">
+                        <div class="col-11 mx-auto table-responsive py-3 ">
+                            <div class="row d-flex justify-content-between align-items-center px-3">
+                                <div class="col-1">
+                                    <p>商品圖片</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>商品名字/出租者</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>運送方式</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>歸還方式</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>付款方式</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>租借日期</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>歸還日期</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>價格</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>勾選</p>
+                                </div>
+                                <div class="col-1">
+                                    <p>從購物車刪除</p>
+                                </div>
+                            </div>
+                            <form class="commodityDetail">
+
+
+                            </form>
+                            <div
+                                class="mt-auto position-absolute border-top border-3 bottom-0 end-0  py-2  col-12 px-5">
+                                <div class="container-fluid">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div>　</div>
+                                        <h3>價格</h3>
+                                        <button type="button" class="btn btn-primary rounded-3 my-2 py-2 px-3 sendcart">
+                                            <span class="d-none d-md-inline-block me-2">確定租借</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ECpay" style="display: none;"></div>
+
+                    <!-- foot -->
+                    <a href="javascript:window.scrollTo(0,0)">
+                        <footer class="footer bg-secondary text-center text-white mt-auto fixed-bottom">
+                            <div class="container-fluid">
+                                <span class="">2022 EEIT48 </span>
+                            </div>
+                        </footer>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- function 區域 -->
+        <script>
+            var total_price = 0;
+            var c;
+            //送出訂單 建立order list 跟 order detail
+            $(".sendcart").click(async function sendOrder() {
+                var cartAll = document.getElementsByClassName("cartt");
+                
+                var date = new Date();
+                var dateStr = date.getFullYear() + "/" + (date.getMonth() + 1).toString().padStart(2, "0") + "/" + date.getDate().toString().padStart(2, "0")
+                    + " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0");
+
+                var date2 = date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, "0") + date.getDate().toString().padStart(2, "0");
+                var randomID = date2 + "PR" + 0 + 0 + parseInt((Math.random()) * 1000000)
+                
+                var p = $.ajax({
+                    type: "post",
+                    url: "/sendorderlist/",
+                    data: {
+                        order_total_price: parseInt(total_price),
+                        order_payment: randomID
+                    }
+                });
+                orderlist = await p;
+                console.log(orderlist);
+                if (item != '') {
+                    for (let i = 0; i < iArray.length; i++) {
+                        console.log($(`.item_return_date${iArray[i]}`).val());
+                        var p = $.ajax({
+                            type: "post",
+                            url: "/sendorderdetail/",
+                            data: {
+                                order_id: orderlist.order_id,
+                                item_id: item.items[iArray[i]].item_id,
+                                item_receive_date: $(`.item_receive_date${iArray[i]}`).val(),
+                                item_return_date: $(`.item_return_date${iArray[i]}`).val(),
+                                deliver_place: $(`.deliver_place${iArray[i]}`).val(),
+                                return_place: $(`.return_place${iArray[i]}`).val(),
+                                item_price: item.items[iArray[i]].item_price,
+                                order_payment: $(`.payText${iArray[i]}`).val(),
+                                order_detail_state: "等待接受"
+                            }
+                        })
+
+                        //刪除訂單
+                        let cart_id = item.lcclass[iArray[i]].cart_id;
+                        var p = $.ajax({
+                            type: "delete",
+                            url: "/deleteCart",
+                            data: {
+                                cart_id: cart_id
+                            }
+                        })
+
+
+                        console.log("orderdetailsend");
+
+                    }
+                }
+                // setTimeout(function () { location.href = "./member_myorder.html" }, 2000);
+           
+
+                var allItemName = "";
+                for (s = 0; s < item.items.length; s++) {
+                    allItemName += item.items[s].item_name;
+                    allItemName += " ";
+                }
+                console.log(dateStr);
+                console.log(randomID);
+                console.log(parseInt(total_price));
+                console.log(allItemName);
+                var postData = {
+                    orderID: randomID,
+                    orderDate: dateStr,
+                    amount: parseInt(total_price),
+                    Item: allItemName
+                }
+
+                var temp = $.ajax({
+                    type: "post",
+                    async:!1,
+                    url: "/pay/",
+                    data: postData
+                });
+                var r = temp["responseText"];
+                console.log(r);
+                $("#ECpay").empty();
+                $("#ECpay").text(r);
+                window.open("receive_payment.html");
+            })
+
+                ;
+
+            var item;
+            async function downloadAndRefreshUI() {
+                var p = $.ajax({
+                    type: "post",
+                    url: "/getcart/",
+                    data: {
+                        member_id: 2
+                    }
+                })
+                item = await p;
+                console.log(item);
+                refreshUI();
+            }
+            downloadAndRefreshUI()
+
+
+            function refreshUI() {
+                $(".commodityDetail").empty();
+                console.log(item)
+                if (item != '') {
+                    for (let i = 0; i < item.lcclass.length; i++) {
+
+                        //商品圖片URL
+                        let url = `${item.llipclass[i].picture_url}`;
+                        //商品名稱
+                        let item_name = `${item.items[i].item_name}`;
+                        //我是上架者
+                        let owner_account = `${item.lcclass[i].owner_account}`;
+                        //商品狀態
+                        let item_state = `${item.items[i].item_state}`;
+                        //商品價格
+                        let item_price = `${item.items[i].item_price}`
+                        //買家711
+                        let buyerseven11_address = `${item.buymember[0].seven11_address}`;
+                        //買家ok
+                        let buyerok_address = `${item.buymember[0].ok_address}`;
+                        //買家全家
+                        let buyefamily_address = `${item.buymember[0].family_address}`;
+
+                        //賣家711
+                        let ownseven11_address = `${item.ownermember[i].seven11_address}`;
+                        //賣家ok
+                        let ownok_address = `${item.ownermember[i].ok_address}`;
+                        //賣家全家
+                        let ownfamily_address = `${item.ownermember[i].family_address}`;
+
+                        //Cart編號 用來刪除用 放置在刪除鍵的NAME
+                        let cart_id = item.lcclass[i].cart_id
+
+                        let payText = "";
+                        for (j = 0; j < item.listmember_payment_detail.length; j++) {
+                            //買家信用卡
+                            let creditcard_number = item.listmember_payment_detail[j].creditcard_number;
+                            payText += `<option>信用卡${creditcard_number}</option>`
+
+                        }
+                        //商品持有人的帳戶
+                        console.log(item.ownermember[i].bank_account)
+                        let bank_account = item.ownermember[i].bank_account;
+                        payText += `<option>帳戶${bank_account}</option>`;
+
+                        let liTemplate = `<div class="card rounded-3 mb-4 cartt num${i}">
+                        <div class="card-body p-2 ">
+                            <div class="row d-flex justify-content-between align-items-center px-1">
+                                <img class="img-fluid rounded-3" style="height:100px;width:auto;" src="../img/${url}">
+                                <div class="col-1">
+                                    <p class="lead fw-normal mb-2">${item_name}</p>
+                                    <p class="text-muted">${owner_account}</p>
+                                </div>
+                                
+                                
+                                <div class="col-1 d-flex">
+                           
+                                    <select class="form-select deliver_place${i}">
+                                        <option>${buyerseven11_address}</option>
+                                        <option>${buyerok_address}</option>
+                                        <option>${buyefamily_address}</option>
+                                    </select>
+                                </div>
+                                <div class="col-1 d-flex">
+                                    <select class="form-select return_place${i}">
+                                        <option>${ownseven11_address}</option>
+                                        <option>${ownok_address}</option>
+                                        <option>${ownfamily_address}</option>
+                                    </select>
+                                </div>
+                                <div class="col-1 d-flex">
+                                
+                                    <select class="form-select payText${i}">
+                                        ${payText} 
+                                    </select>
+                                </div>
+                                <div class="col-1 d-flex px-1 "> 
+                                                                <input class="form-control item_receive_date${i} receive_date" type="date" id="productdate" name="item_date" data-value="${i}">
+                                </div>
+                                <div class="col-1 d-flex px-1 ">  
+                                                                <input class="form-control item_return_date${i} return_date" type="date" id="productdate" name="item_date" data-value="${i}">
+                                </div>
+                            
+                                <div class="col-1 d-flex px-1">
+                                    $${item_price}
+                                </div>
+                                <div class="col-1">
+                                    <input class="form-check-input form_check_input  check_input${i}" type="checkbox" value="" style="width: 20px; height: 20px" data-value="${i}" data-value1="">
+                                </div>
+                                <div class="col-1 text-end">
+                                    <button type="button" class="btn border-1 border-dark bg-info text-white deleteCart" name="${cart_id}">刪除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                        $(".commodityDetail").append(liTemplate);
+                        // total_price += parseInt(item_price);
+                        console.log(total_price);
+                        //刪除購物車的一筆訂單
+                        $(".deleteCart").click(function () {
+
+                            var cart_id = $(this).attr("name");
+                            console.log(cart_id);
+                            var p = $.ajax({
+                                type: "delete",
+                                url: "/deleteCart",
+                                data: {
+                                    cart_id: cart_id
+                                }
+                            })
+                            location.href = "./cart.html"
+
+                        }
+                        )
+                    }
+                }
+            }
+            var iArray = [];
+
+            //日期改變時驗證資料
+            $("body").on("change", ".return_date", function () {
+                function gDate(datestr) {
+                    var temp = datestr.split("-");
+                    var date = new Date(temp[0], temp[1], temp[2]);
+                    return date;
+                };
+                var x = $(this).attr("data-value");
+                console.log($(`.item_return_date${x}`).val());
+                console.log($(`.item_receive_date${x}`).val());
+                var date1 = new Date($(`.item_return_date${x}`).val());
+                var date2 = new Date($(`.item_receive_date${x}`).val());
+                if (date1 < date2) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '錯誤',
+                        text: '歸還日不能小於租借日!'
+                        
+                    })
+                } else if ((date1 - date2) / 60 / 1000 / 60 / 24 < 5) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '錯誤',
+                        text: '租借日要大於五天!'
+                       
+                    })
+                } else if (item.order_detail[x].length == 0) {
+                    // alert((date1 - date2) / 60 / 1000 / 60 / 24);
+                    dayInterval = (date1 - date2) / 60 / 1000 / 60 / 24;
+                    $(`.check_input${x}`).attr("data-value1", dayInterval);
+                }
+                else {
+                    for (i = 0; i < item.order_detail[x].length; i++) {
+                        var start = new Date(item.order_detail[x][i].item_receive_date);
+                        var end = new Date(item.order_detail[x][i].item_return_date)
+                        if ((date1 < start && date2 < end) || (date1 > end && date2 > end)) {
+                            // alert((date1 - date2) / 60 / 1000 / 60 / 24)
+                            dayInterval = (date1 - date2) / 60 / 1000 / 60 / 24;
+                            $(`.check_input${x}`).attr("data-value1", dayInterval)
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '錯誤',
+                                text: '此商品已被預約!'
+                             
+                            })
+                        }
+                    }
+                }
+            })
+
+
+
+
+
+
+            //勾選驗證
+            $("body").on("click", ".form_check_input", function () {
+                var dataValue = $(this).attr("data-value");
+                console.log($(this).attr("data-value1"));
+                if ($(this).prop("checked")) {
+                    console.log("已加入");
+                    console.log(dataValue);
+                    iArray.push($(this).attr("data-value"));
+                    var temp = $(this).attr("data-value");
+                    total_price += (parseInt(`${item.items[temp].item_price}`) * $(this).attr("data-value1"));
+                    console.log(iArray);
+                    console.log(total_price);
+                }
+                else {
+                    console.log("未加入");
+                    iArray.forEach(function (item, index, arr) {
+                        if (item == dataValue) {
+                            arr.splice(index, 1);
+                        }
+                    })
+                    var temp = $(this).attr("data-value");
+
+                    total_price -= parseInt(`${item.items[temp].item_price}` * $(this).attr("data-value1"));
+                    console.log(iArray);
+                    console.log(total_price);
+                }
+
+
+            })
+        </script>
+        <script src="../js/logIn.js"></script>
+        <script>
+            if (AjaxgetRegister()["responseJSON"]["member_id"] == 0) {
+                alert("請先登入")
+                window.location.replace("../index.html");
+            }
+        </script>
+</body>
+
+</html>

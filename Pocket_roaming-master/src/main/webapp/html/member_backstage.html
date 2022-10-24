@@ -1,0 +1,883 @@
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../bootstrap5/css/bootstrap.css" rel="stylesheet">
+	<!-- <link href="../css/index.css" rel="stylesheet"> -->
+	<script src="../bootstrap5/js/bootstrap.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../bootstrap5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.toast.js"></script>
+	<link rel="stylesheet" href="../css/jquery.toast.css">
+	<script src="../js/logIn.js"></script>
+	<script src="../js/jquery.toast.js"></script>
+	<link href="../css/jquery.toast.css" rel="stylesheet">
+	<link href="../css/main.css" rel="stylesheet">
+	<!-- <script src = "../js/profiles.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+		integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
+		integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+	<title>Document</title>
+	<style>
+		.chart {
+			width: 800px;
+			height: 400px;
+
+		}
+
+		.noshow {
+			visibility: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-11"> -->
+	<!-- top-navbar navbar navbar-expand-sm navbar-dark bg-dark -->
+	<nav class="navbar navbar-expand bg-info text-white px-5">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="../index.html">
+				<img src="../img/LOGO03.png" style="height:50px; width:auto;">
+			</a>
+			<ul class="nav nav-pills me-auto te mx-1">
+				<!-- nav nav-pills -->
+				<!-- data-bs-toggle="pill" -->
+				<li class="nav-item">
+					<a class="nav-link text-white fs-4" href="../index.html">首頁</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white fs-4" href="./rentflow.html">租借流程</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white fs-4" href="./chat.html">聊天室</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white fs-4" href="./wishpool.html">許願池</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white active fs-4" href="./member.html">會員</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white fs-4" href="./cart.html">購物車</a>
+				</li>
+			</ul>
+			<!-- 靠右 -->
+			<div class="d-flex">
+				<div class="btn-group " role="group">
+					<!-- 第一顆按鈕 -->
+					<button id="loginBtn" type="button" class="btn btn-primary fs-4" data-bs-toggle="modal"
+						data-bs-target="#staticBackdrop">登入</button>
+					<button id="logoutBtn" type="submit" style="display:none"
+						class="btn btn-primary fs-4 rounded rounded-2" data-bs-target="#staticBackdrop ">登出</button>
+
+					<!-- 第二顆按鈕 -->
+					<button id="createBtn" type="button" class="btn btn-primary fs-4" data-bs-toggle="modal"
+						data-bs-target="#staticBackdrop2">註冊</button>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+		<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title text-dark" id="staticBackdropLabel2">註冊</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+
+					<form class="text-dark">
+						<div class="modal-body">
+							<label class="mx-2 my-1">帳號</label>
+							<input class="mx-2 my-1" type="text" id="createAccountTextBox" placeholder="請輸入大小寫英數字"><br>
+							<label class="mx-2 my-1">密碼</label>
+							<input class="mx-2 my-1" type="password" id="createPasswordMTextBox"
+								placeholder="請輸入大小寫英數字"><br>
+							<label class="mx-2 my-1">信箱</label>
+							<input class="mx-2 my-1" type="text" id="createMailTextBox" placeholder=""><br>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary fs-4" data-bs-dismiss="modal">關閉</button>
+							<button type="button" id="createMember" class="btn btn-primary fs-4"
+								data-bs-dismiss="modal">送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+		<!--  -->
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title text-dark fs-4" id="staticBackdropLabel">登入</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<form class="text-dark">
+						<div class="modal-body" id="loginBox">
+							<label class="mx-2 my-1">帳號</label>
+							<input class="mx-2 my-1" type="text" id="loginAccountTextBox" placeholder="請輸入大小寫英數字"><br>
+							<label class="mx-2 my-1">密碼 </label>
+							<input class="mx-2 my-1" type="password" id="loginPasswordMTextBox"
+								placeholder="請輸入大小寫英數字"><br>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn fs-4" id="forgetBtn">忘記密碼？</button>
+							<button type="button" class="btn btn-secondary fs-4" data-bs-dismiss="modal">關閉</button>
+							<button type="button" id="loginMember" class="btn btn-primary fs-4"
+								data-bs-dismiss="modal">送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+	</nav>
+	<!-- main-body -->
+	<div class="container-fluid">
+		<div class="row justify-content-center mainbody vh-100">
+			<div class="col-1 sidemainbody"></div>
+			<div class="col-10">
+				<div class="row justify-content-center vh-100">
+					<!-- 左側導覽列 -->
+					<div class="col-3 sidemainbody fs-3 ">
+						<div class="mx-3 my-3 px-3 py-3 ">
+							<ul class="nav flex-column nav-pills nav-fill">
+								<li class="nav-item ">
+									<a class="nav-link" id="nav-member-tab" aria-controls="tab1"
+										href="./member_profile.html" aria-selected="true">會員資料</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="./member_payment.html">付款資訊</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="./member_traderecord.html" aria-selected="false">交易紀錄</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="./member_wishlist.html" aria-selected="false">願望清單</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="./member_addwishlists.html"
+										aria-selected="false">發表願望</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="./member_myproduct.html" aria-selected="false">我的商品</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="./member_uploadproduct.html"
+										aria-selected="false">上架商品</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="./member_receiveorder.html"
+										aria-selected="false">已接收訂單</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="./member_myorder.html" aria-selected="false">下訂訂單</a>
+								</li>
+								<li class="nav-item  normal" id="backstage">
+									<a class="nav-link active" href="./member_backstage.html"
+										aria-selected="false">管理者後台</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- 標籤內容 -->
+					<div class="col-9 ">
+						<div class="mx-3 my-3 px-3 py-3" id="myTab">
+							<div class="mx-3 my-3 px-3 py-3 text-dark" id="myTab">
+								<!-- 管理者後台 -->
+								<div class="text-dark " id="tab2">
+									<h1>管理者後台</h1>
+									<span style="display: inline;" class="fs-2">圖表:</span>
+									<button id="itemsPie" class="btn btn-primary fs-4 p-2 m-1"><i
+											class="fa fa-pie-chart fs-4" aria-hidden="true"></i><br>商品比例</button>
+									<button id="CategoriesPie" class="btn btn-primary fs-4 p-2 m-1"><i
+											class="fa fa-pie-chart fs-4" aria-hidden="true"></i><br>熱門分類</button>
+									<button id="membersLine" class="btn btn-primary fs-4 p-2 m-1"><i
+											class="fa fa-line-chart fs-4" aria-hidden="true"></i><br>活躍會員</button>
+								</div>
+								<!-- <form class="my-2"> -->
+								<br>
+
+								<label class="fs-2">會員管理</label>
+								<input type="text" placeholder="以帳號搜尋" id="searchAcc" class="fs-4">
+								<input type="text" placeholder="以暱稱搜尋" id="searchName" class="fs-4">
+
+								<button class="btn btn-danger border-3 border-dark mx-3 fs-4"
+									id="searchMember">確定</button>
+
+								<!-- </form> -->
+
+								<!-- <form class="my-2"> -->
+								<br />
+								<label class="fs-2">商品管理</label>
+								<input type="text" placeholder="以品名搜尋" id="searchItemName" class="fs-4">
+								<button class="btn btn-danger border-3 border-dark mx-3 fs-4"
+									id="searchItem">確定</button>
+
+								<!-- </form> -->
+
+							</div>
+
+
+							<div id="divChart">
+								<div id="piechart01" class="chart noshow" style="width: 1200px; height: 500px;"></div>
+								<div id="piechart02" class="chart noshow" style="width: 1200px; height: 500px;"></div>
+								<div id="linechart01" class="chart noshow" style="width: 1200px; height: 500px;"></div>
+							</div>
+							<!-- <div id="linechart02" class="chart noshow"></div> -->
+							<div id="divMember"></div>
+							<div id="divItem"></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- foot -->
+				<a href="javascript:window.scrollTo(0,0)">
+					<footer class="footer bg-secondary text-center text-white mt-auto fixed-bottom">
+						<div class="container-fluid">
+							<span class="">2022 EEIT48 </span>
+						</div>
+					</footer>
+				</a>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+	<!-- function 區域 -->
+	<script>
+		// function AjaxgetAccount(inputaccount){
+		// 	return $.ajax({
+		// 	type: "post",
+		// 	url: "/findmember_accountlike/"+inputaccount,
+		// 	async: !1,
+		// })}
+		// function getaccount(){
+		// 	var abc = $("#searchAcc").val();
+		// 	console.log(abc)
+		// 	res = AjaxgetAccount(abc)["responseJSON"]
+		// 	console.log(res)
+		// 	resval = []
+		// 	for(var i =0;i<res.length;i++){
+		// 		// console.log(res[i].member_account)
+		// 		resval.push(res[i].member_account)
+		// 	}
+		// 	console.log(resval)
+		// 	return resval
+		// }
+		$("#searchAcc").autocomplete({
+			source: function (request, response) {
+				console.log(request);
+				$.ajax({
+					type: "post",
+					url: "/findmember_accountlike/" + request.term,
+					async: !1,
+					success: function (data) {
+						console.log(data)
+						resval = []
+						for (var i = 0; i < data.length; i++) {
+							// console.log(res[i].member_account)
+							resval.push(data[i].member_account)
+						}
+						response(resval);
+					}
+				})
+			}
+		});
+
+		function clearSearchResult() {
+			$("#divChart").show();
+			$("#divMember").empty();
+			$("#divItem").empty();
+			$("#searchAcc").val("");
+			$("#searchName").val("");
+			$("#searchItemName").val("");
+		}
+		// google chart
+		google.charts.load('current', { 'packages': ['corechart'] });
+		google.charts.setOnLoadCallback(drawChartPie01);
+		google.charts.load('current', { 'packages': ['corechart'] });
+		google.charts.setOnLoadCallback(drawChartPie02);
+		google.charts.load('current', { 'packages': ['corechart'] });
+		google.charts.setOnLoadCallback(drawChartLine01);
+
+		$("#itemsPie").on("click", function () {
+			$("#piechart01").removeClass("noshow");
+			$("#piechart01").show();
+			$("#piechart02").hide();
+			$("#linechart01").hide();
+			clearSearchResult();
+		})
+		$("#CategoriesPie").on("click", function () {
+			$("#piechart02").removeClass("noshow");
+			$("#piechart02").show();
+			$("#piechart01").hide();
+			$("#linechart01").hide();
+			clearSearchResult();
+		})
+		$("#membersLine").on("click", function () {
+
+			$("#linechart01").removeClass("noshow");
+			$("#linechart01").show();
+			$("#piechart01").hide();
+			$("#piechart02").hide();
+			clearSearchResult();
+		})
+
+		async function drawChartPie01() {
+			var temp = $.ajax({
+				type: "get",
+				url: "/api/manage/itemAnalyze/"
+			})
+			var r = await temp;
+			var data = google.visualization.arrayToDataTable([
+				['商品類別', '數量'],
+				['漫畫', r[0].length],
+				['小說', r[1].length],
+				['桌遊', r[2].length],
+				['主機', r[3].length]
+			]);
+
+			var options = {
+				title: '商品類別占商品總數量比例',
+				titleTextStyle: {
+					color: "black",    // any HTML string color ('red', '#cc00cc')
+					// fontName: 'Times New Roman', // i.e. 'Times New Roman'
+					fontSize: 40, // 12, 18 whatever you want (don't specify px)
+					bold: false,    // true or false
+					italic: false   // true of false
+
+				},
+				fontSize: 32
+
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('piechart01'));
+			chart.draw(data, options);
+		}
+
+		async function drawChartPie02() {
+			var temp = $.ajax({
+				type: "get",
+				url: "/api/manage/popularItemCatagories/"
+			})
+			var r = await temp;
+
+			var data = google.visualization.arrayToDataTable([
+				['商品類別', '累計出租次數'],
+				[r.categories[0], r.rentTimes[0]],
+				[r.categories[1], r.rentTimes[1]],
+				[r.categories[2], r.rentTimes[2]],
+				[r.categories[3], r.rentTimes[3]],
+				[r.categories[4], r.rentTimes[4]]
+			]);
+
+			var options = {
+				title: '熱門商品類別及累計出租次數',
+				titleTextStyle: {
+					color: "black",    // any HTML string color ('red', '#cc00cc')
+					// fontName: 'Times New Roman', // i.e. 'Times New Roman'
+					fontSize: 40, // 12, 18 whatever you want (don't specify px)
+					bold: false,    // true or false
+					italic: false,   // true of false
+
+				},
+				fontSize: 32
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('piechart02'));
+			chart.draw(data, options);
+		}
+
+		function drawChartLine01() {
+
+			var data = google.visualization.arrayToDataTable([
+				['活躍會員數', '月份'],
+				[1, 354], [2, 389], [3, 412], [4, 476], [5, 653], [6, 781],
+				[7, 924], [8, 1053], [9, 1284], [10, 1436]
+			]);
+			// Set Options
+			var options = {
+				title: '本年度逐月活躍會員數',
+				titleTextStyle: {
+					color: "black",    // any HTML string color ('red', '#cc00cc')
+					// fontName: 'Times New Roman', // i.e. 'Times New Roman'
+					fontSize: 40, // 12, 18 whatever you want (don't specify px)
+					bold: false,    // true or false
+					italic: false,   // true of false
+
+				},
+				hAxis: {
+					title: '月份',
+					titleTextStyle: {
+						color: "black",
+						bold: false,
+						italic: false,
+					}
+				},
+				vAxis: {
+					title: '人數',
+					titleTextStyle: {
+						color: "black",
+						bold: false,
+						italic: false,
+					},
+
+				},
+				legend: 'none',
+				fontSize: 32,
+
+			};
+			// Draw Chart
+			var chart = new google.visualization.LineChart(document.getElementById('linechart01'));
+			chart.draw(data, options);
+		}
+
+
+		$("#searchAcc").on("input", function () {
+			$("#searchName").val("");
+			$("#searchItemName").val("");
+		})
+
+		$("#searchName").on("input", function () {
+			$("#searchAcc").val("");
+			$("#searchItemName").val("");
+		})
+
+		$("#searchItemName").on("input", function () {
+			$("#searchAcc").val("");
+			$("#searchName").val("");
+		})
+
+		async function searchMemberAccountAndRefreshUI(acc) {
+			$.get("/api/manage/account/"
+				+ acc,
+				function (e) {
+					if (e.mb.member_nickname == null) {
+						e.mb.member_nickname = "未設定";
+					}
+					$("#divMember").empty();
+					$("#divItem").empty();
+					$("#divChart").hide();
+					oldtemplate =
+						"<h1 id='memberID'>會員ID: " + e.mb.member_id + "</h1><br>" +
+						"<h1>會員帳號: " + e.mb.member_account + "</h1><br>" +
+						"<h1>會員暱稱: " + e.mb.member_nickname + "</h1><br>" +
+						"<h1>目前權限: " + e.mb.member_rank + "</h1><br>" +
+						"<select name='rank' id='rank' class='fs-4 m-2'>" +
+						"<option value='一般'>一般權限</option>" +
+						"<option value='停權'>停權</option>" +
+						"</select>" +
+						"<div id='inputBanDate'>" +
+						"<button class='memberConfirm btn btn-danger border-3 border-dark fs-3'>確認更改</button><hr>" +
+						"</div>" +
+						"<h1>會員商品</h1><br>"
+					template = `
+					<div class="col-10 mx-3 card px-3 py-2 sidemainbody">
+						<div class="d-flex justify-content-between fs-3">
+						<div id="memberID">會員ID: ${e.mb.member_id}</div>
+						<div>會員帳號: ${e.mb.member_account}</div>
+						<div>會員暱稱: ${e.mb.member_nickname}</div>
+						<div>目前權限: ${e.mb.member_rank}</div>
+						</div>
+	
+						<div class="d-flex justify-content-between fs-3">
+							<select name='rank' id='rank' class='fs-3 m-2'><option value='一般'>一般權限</option><option value='停權'>停權</option></select>
+						</div>
+						<div id='inputBanDate' class="d-flex justify-content-between fs-3 my-2">
+							<button class='memberConfirm btn btn-danger border-3 border-dark fs-5'>確認更改</button>	
+						</div>
+					</div>
+						<hr>
+						<h1>會員商品</h1><br>
+						
+			
+						`;
+
+					$("#divMember").append(template);
+
+					for (var i = 0; i < e.it.length; i++) {
+						var oldtemplate = "<h2>商品" + (i + 1) + "</h2><br>" +
+							"<h2>商品ID: " + e.it[i].item_id + "</h2><br>" +
+							"<h2>商品名稱: " + e.it[i].item_name + "</h2><br>" +
+							"<h2>商品狀態: " + e.it[i].item_state + "</h2><br>" +
+							"<select class='state m-2 fs-4' id='state" + e.it[i].item_id + "'>" +
+							"<option value='上架中'>上架中</option>" +
+							"<option value='準備上架'>準備上架</option>" +
+							"<option value='已刪除'>已刪除</option>" +
+							"</select>" +
+							"<div id='inputResellDate" + e.it[i].item_id + "'>" +
+							"<button class='itemConfirm btn btn-danger' id='iConfirm" + e.it[i].item_id +
+							"'>確認更改</button><hr>" +
+							"</div>";
+						var template = `
+							<div class="col-10 mx-3 card px-3 py-2 sidemainbody my-3">
+								<div class="d-flex justify-content-between fs-3">
+									<div>商品${i + 1}</div>
+									<div>商品ID: ${e.it[i].item_id}</div>
+									<div>商品名稱: ${e.it[i].item_name}</div>
+									<div>商品狀態: ${e.it[i].item_state}</div>
+								</div>
+								<div class="d-flex justify-content-between fs-3">
+									<select name='rank' id="state${e.it[i].item_id}" class='state fs-3 m-2'>
+										<option value='上架中'>上架中</option>
+										<option value='準備上架'>準備上架</option>
+										<option value='已刪除'>已刪除</option>
+									</select>
+									<div id='inputResellDate${e.it[i].item_id}' class="d-flex justify-content-between fs-3 my-2">
+										<button class='itemConfirm btn btn-danger border-3 border-dark fs-5' id="iConfirm${e.it[i].item_id}">確認更改</button>	
+									</div>
+								</div>
+							</div>
+							
+							`
+						$("#divMember").append(
+							template
+						)
+					}
+				}
+			)
+		}
+		async function searchMemberNicknameAndRefreshUI(nick) {
+
+			$.get("/api/manage/nickname/"
+				+ nick,
+				function (e) {
+					$("#divMember").empty();
+					$("#divItem").empty();
+					$("#divChart").hide();
+					for (var i = 0; i < e.mbs.length; i++) {
+						var oldtemplate = "<div id='divID" + e.mbs[i].member_id + "'>" +
+							"<h1>會員ID: " + e.mbs[i].member_id + "</h1><br>" +
+							"<h1>會員帳號: " + e.mbs[i].member_account + "</h1><br>" +
+							"<h1>會員暱稱: " + e.mbs[i].member_nickname + "</h1><br>" +
+							"<h1>目前權限: " + e.mbs[i].member_rank + "</h1><br>" +
+							"<button id='btnID" + i +
+							"' class='selectbtn'>選擇</button>" +
+							"</div>";
+						var template = `
+						<div class="col-10 mx-3 card px-3 py-2 sidemainbody">
+						<div class="d-flex justify-content-between fs-3" id="divID${e.mbs[i].member_id}">
+						<div>會員ID: ${e.mbs[i].member_id}</div>
+						<div>會員帳號: ${e.mbs[i].member_account}</div>
+						<div>會員暱稱: ${e.mbs[i].member_nickname}</div>
+						<div>目前權限: ${e.mbs[i].member_rank}</div>
+						</div>
+						<div class="d-flex justify-content-between fs-3">
+						<button id="btnID${i}" class="selectbtn btn btn-danger border-3 border-dark fs-5">選擇</button>
+						</div>
+					</div>
+						`
+						$("#divMember").append(template);
+					}
+
+					$("#divMember").on("click", ".selectbtn", async function () {
+						var index = parseInt(this.id.substr(-1));
+						oldtemplate = "<h1 id='memberID'>會員ID: " + e.mbs[index].member_id + "</h1><br>" +
+							"<h1>會員帳號: " + e.mbs[index].member_account + "</h1><br>" +
+							"<h1>會員暱稱: " + e.mbs[index].member_nickname + "</h1><br>" +
+							"<h1>目前權限: " + e.mbs[index].member_rank + "</h1><br>" +
+							"<select name='rank' id='rank' class='fs-4 m-2'>" +
+							"<option value='一般'>一般權限</option>" +
+							"<option value='停權'>停權</option>" +
+							"</select>" +
+							"<div id='inputBanDate'>" +
+							"<button class='memberConfirm btn btn-danger border-3 border-dark fs-3'>確認更改</button><hr>" +
+							"</div>" +
+							"<h1>會員商品</h1><br>" +
+							"<h2>數量:" + e.its[index].length + "</h2><br>";
+
+						template = `
+						<div class="col-10 mx-3 card px-3 py-2 sidemainbody">
+						<div class="d-flex justify-content-between fs-3">
+							<div id="memberID">會員ID: ${e.mbs[index].member_id}</div>
+							<div>會員帳號: ${e.mbs[index].member_account}</div>
+							<div>會員暱稱: ${e.mbs[index].member_nickname}</div>
+							<div>目前權限: ${e.mbs[index].member_rank}</div>
+						</div>
+						
+						<div class="d-flex justify-content-between fs-3">
+							<select name='rank' id='rank' class='fs-3 m-2'><option value='一般'>一般權限</option><option value='停權'>停權</option></select>
+						</div>
+						<div id='inputBanDate' class="d-flex justify-content-between fs-3 my-2">
+							<button class='memberConfirm btn btn-danger border-3 border-dark fs-5'>確認更改</button>	
+						</div>
+						<hr>
+						<h1>會員商品</h1><br>
+						
+					</div>
+						`;
+						$("#divMember").empty();
+						$("#divMember").append(template);
+
+						for (var i = 0; i < e.its[index].length; i++) {
+							var oldtemplate =
+								"<h2>商品" + (i + 1) + "</h2><br>" +
+								"<h2>商品ID: " + e.its[index][i].item_id + "</h2><br>" +
+								"<h2>商品名稱: " + e.its[index][i].item_name + "</h2><br>" +
+								"<h2>商品狀態: " + e.its[index][i].item_state + "</h2><hr>" +
+								"<select class='state m-2 fs-4' id='state" + e.its[index][i].item_id + "'>" +
+								"<option value='上架中'>上架中</option>" +
+								"<option value='準備上架'>準備上架</option>" +
+								"<option value='已刪除'>已刪除</option>" +
+								"</select>" +
+								"<div id='" + e.its[index][i].item_id + "'>" +
+								"<button class='itemConfirm btn btn-danger' id='iConfirm" + e.its[index][i].item_id +
+								"'>確認更改</button><hr>" +
+								"</div>"
+
+							var template = `
+							<div class="col-10 mx-3 card px-3 py-2 sidemainbody my-3">
+								<div class="d-flex justify-content-between fs-3">
+									<div>商品${i + 1}</div>
+									<div>商品ID: ${e.its[index][i].item_id}</div>
+									<div>商品名稱: ${e.its[index][i].item_name}</div>
+									<div>商品狀態: ${e.its[index][i].item_state}</div>
+								</div>
+								<div class="d-flex justify-content-between fs-3">
+											
+								</div>
+								<div class="d-flex justify-content-between fs-3">
+									<select name='rank' id="state${e.its[index][i].item_id}" class='state fs-3 m-2'>
+										<option value='上架中'>上架中</option>
+										<option value='準備上架'>準備上架</option>
+										<option value='已刪除'>已刪除</option>
+									</select>
+									<div id='inputResellDate${e.its[index][i].item_id}' class="d-flex justify-content-between fs-3 my-2">
+										<button class='itemConfirm btn btn-danger border-3 border-dark fs-5' id="iConfirm${e.its[index][i].item_id}">確認更改</button>	
+									</div>
+								</div>
+							</div>
+							`
+							$("#divMember").append(template);
+						}
+					}
+					)
+				}
+			)
+		}
+
+		$("#searchMember").click(
+
+			async function () {
+				$("#divMember").empty();
+				$("#divItem").empty();
+				$("#divChart").hide();
+				if ($("#searchAcc").val() != "") {
+					searchMemberAccountAndRefreshUI($("#searchAcc").val());
+				} else if ($("#searchName").val() != "") {
+					searchMemberNicknameAndRefreshUI($("#searchName").val());
+				}
+			})
+
+		async function searchItem(name) {
+			$("#divMember").empty();
+			$("#divItem").empty();
+			$("#divChart").hide();
+			var postdata = {
+				item_name: name
+			}
+			var temp = $.ajax({
+				type: "post",
+				url: "/api/manage/itemNameManager",
+				// contentType:"text/html",
+				data: postdata
+			})
+			var r = await temp;
+			$("#divItem").empty();
+			for (var i = 0; i < r.length; i++) {
+
+				var oldtemplate =
+					"<h2>商品" + (i + 1) + "</h2><br>" +
+					"<h2>商品ID: " + r[i].item_id + "</h2><br>" +
+					"<h2>商品名稱: " + r[i].item_name + "</h2><br>" +
+					"<h2>商品狀態: " + r[i].item_state + "</h2><br>" +
+					"<select class='state m-2 fs-4' id='state" + r[i].item_id + "'>" +
+					"<option value='上架中'>上架中</option>" +
+					"<option value='準備上架'>準備上架</option>" +
+					"<option value='已刪除'>已刪除</option>" +
+					"</select>" +
+					"<div id='inputResellDate" + r[i].item_id + "'>" +
+					"<button class='itemConfirm btn btn-danger' id='iConfirm" + r[i].item_id +
+					"'>確認更改</button><hr>" +
+					"</div>";
+				var template =
+					`<div class="col-10 mx-3 card px-3 py-2 sidemainbody my-3">
+								<div class="d-flex justify-content-between fs-3">
+									<div>商品${i + 1}</div>
+									<div>商品ID: ${r[i].item_id}</div>
+									<div>商品名稱: ${r[i].item_name}</div>
+									<div>商品狀態: ${r[i].item_state}</div>
+								</div>
+								<div class="d-flex justify-content-between fs-3">
+											
+								</div>
+								<div class="d-flex justify-content-between fs-3">
+									<select name='rank' id="state${r[i].item_id}" class='state fs-3 m-2'>
+										<option value='上架中'>上架中</option>
+										<option value='準備上架'>準備上架</option>
+										<option value='已刪除'>已刪除</option>
+									</select>
+									<div id='inputResellDate${r[i].item_id}' class="d-flex justify-content-between fs-3 my-2">
+										<button class='itemConfirm btn btn-danger border-3 border-dark fs-5' id="iConfirm${r[i].item_id}">確認更改</button>	
+									</div>
+								</div>
+							</div>`
+
+				$("#divItem").append(template);
+
+			}
+		}
+
+		$("#searchItem").click(
+			async function () {
+				if ($("#searchItemName").val) {
+					searchItem($("#searchItemName").val());
+				}
+			})
+
+		$("#myTab").on("change", "#rank", function () {
+			if ($("#rank").val() == "停權") {
+				$("#inputBanDate").empty();
+				$("#inputBanDate").append(
+					"<label>停權結束日期:</label><input type='date' id='banDate'><br>" +
+					"<button class='memberConfirm btn btn-danger border-3 border-dark fs-5'>確認更改</button><hr>"
+				);
+			} else {
+				$("#inputBanDate").empty();
+				$("#inputBanDate").append(
+					"<button class='memberConfirm btn btn-danger border-3 border-dark fs-5'>確認更改</button><hr>"
+				)
+			}
+		})
+
+		$("#myTab").on("change", ".state", function () {
+			var ID = parseInt(this.id.slice(5));
+			$("#inputResellDate" + ID).empty();
+			if ($("#state" + ID).val() == "準備上架") {
+				$("#inputResellDate" + ID).append(
+					"<div	>" +
+					"<label class='mx-3 '>重新上架日期:</label><input class='mx-3' type='date' id='resellDate" + ID +
+					"'>" +
+					"<button class='itemConfirm btn btn-danger border-3 border-dark fs-5' id='iConfirm" + ID +
+					"'>確認更改</button><div>"
+				);
+			} else {
+				$("#inputResellDate" + ID).append(
+					"<button class='itemConfirm btn btn-danger border-3 border-dark fs-5' id='iConfirm" + ID +
+					"'>確認更改</button><hr>"
+				)
+			}
+		})
+
+		$("#myTab").on("click", ".memberConfirm", async function () {
+			var newRank = $("#rank").val();
+			var rankedMemberID = parseInt($("#memberID").text().slice(6));
+			var banDate;
+			console.log($("#memberID").text())
+			console.log(rankedMemberID + "　" + banDate + "　" + newRank)
+
+			switch (newRank) {
+				case "一般":
+					banDate = "";
+					break;
+				case "停權":
+					banDate = $("#banDate").val();
+					break;
+			}
+			var rankData = {
+				rank: newRank,
+				bDate: banDate,
+				ID: rankedMemberID
+			}
+
+			var temp = $.ajax({
+				type: "put",
+				url: "/api/manage/memberRank",
+				// contentType:"text/html",
+				data: rankData
+			})
+			$.toast({
+				heading: '通知',
+				text: "已將會員ID:" + rankedMemberID + "權限設為" + newRank,
+				icon: 'info',
+				loader: true,
+				loaderBg: '#9EC600',
+				showHideTransition: 'fade',
+				position: "top-center",
+			})
+			setTimeout(function () {
+				if ($("#searchAcc").val() != "") {
+					searchMemberAccountAndRefreshUI($("#searchAcc").val());
+				} else if ($("#searchName").val() != "") {
+					searchMemberNicknameAndRefreshUI($("#searchName").val());
+				}
+			}, 500)
+		})
+
+		$("#myTab").on("click", ".itemConfirm", async function () {
+			var itemID = parseInt(this.id.slice(8));
+			var newState = $("#state" + itemID).val();
+			var resellDate;
+
+			switch (newState) {
+				case "上架中":
+					resellDate = "";
+					break;
+				case "準備上架":
+					resellDate = $("#resellDate" + itemID).val();
+					break;
+				case "已刪除":
+					resellDate = "";
+					break;
+			}
+			var stateData = {
+				state: newState,
+				date: resellDate,
+				ID: itemID
+			}
+			var temp = $.ajax({
+				type: "put",
+				url: "/api/manage/itemState",
+				// contentType:"text/html",
+				data: stateData
+			})
+			$.toast({
+				heading: '通知',
+				text: "已將商品ID:" + itemID + "狀態設為" + newState,
+				icon: 'info',
+				loader: true,
+				loaderBg: '#9EC600',
+				showHideTransition: 'fade',
+				position: "top-center",
+			})
+			setTimeout(function () {
+				if ($("#searchItemName").val()) {
+					searchItem($("#searchItemName").val());
+				} else if ($("#searchAcc").val() != "") {
+					searchMemberAccountAndRefreshUI($("#searchAcc").val());
+				} else if ($("#searchName").val() != "") {
+					searchMemberNicknameAndRefreshUI($("#searchName").val());
+				}
+
+			}, 500)
+		})
+
+	</script>
+</body>
+
+</html>
